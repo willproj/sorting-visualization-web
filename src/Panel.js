@@ -15,7 +15,7 @@ import getSelectionSortAnimations from './algComponent/SelectionSort'
 
 import randomGenerator, {
     initArraySize, minElement, maxElement,
-    initSpeed, initColor, changeColor, maxArraySize, findMax
+    initSpeed, initColor, changeColor, maxArraySize, findMax, maxSpeed, minSpeed, minArraySize
 } from './Util'
 
 
@@ -72,17 +72,16 @@ const Panel = () => {
         for (let i = 0; i < newVal; i++) {
             newarray.push(randomGenerator(minElement, maxElement));
         }
-
         setArray(newarray);
     }
 
     const handleSpeedChange = (event, newVal) => {
-        setSpeed(newVal);
+        console.log(speed);
+        setSpeed(maxSpeed - newVal);
     }
 
     const bubbleSort = () => {
         const animationArray = getBubbleSortAnimation(array);
-        //setTimeout(() => { setRunning(true) }, speed*10);
         setTimeout(() => { setRunning(false) }, animationArray.length * speed);
         const arrayBars = document.getElementsByClassName('array-bar');
 
@@ -97,11 +96,6 @@ const Panel = () => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
                 }, i * speed);
-
-                setTimeout(() => {
-                    barTwoStyle.backgroundColor = 'blue';
-                }, (animationArray.length) * speed);
-
             } else {
                 setTimeout(() => {
                     const [barOneIdx, newHeight] = animationArray[i];
@@ -109,19 +103,7 @@ const Panel = () => {
                     barOneStyle.height = `${newHeight}px`;
                 }, i * speed);
             }
-
-            if (colorChange) {
-                const [barOneIdx, barTwoIdx] = animationArray[i];
-                const barTwoStyle = arrayBars[barTwoIdx].style;
-                
-                setTimeout(() => {
-                    barTwoStyle.backgroundColor = 'blue';
-                }, (animationArray.length) * speed);
-
-            } 
-
         }
-
     }
 
     const mergeSort = () => {
@@ -225,10 +207,10 @@ const Panel = () => {
         }
     }
 
-   
+
 
     return (
-        
+
         <div>
             <div className={classes.margin} />
             <div className={classes.grid}>
@@ -239,14 +221,14 @@ const Panel = () => {
                                 <Typography gutterBottom>Amount</Typography>
                                 <PrettoSlider valueLabelDisplay="auto"
                                     aria-label="pretto slider" defaultValue={initArraySize}
-                                    min={5} max={maxArraySize}
+                                    min={minArraySize} max={maxArraySize}
                                     onChange={handleAmountChange}
                                     disabled={isrunning}
                                 />
                                 <Typography gutterBottom>Speed</Typography>
                                 <PrettoSlider valueLabelDisplay="auto"
                                     aria-label="pretto slider" defaultValue={initSpeed}
-                                    min={1} max={200}
+                                    min={minSpeed} max={maxSpeed}
                                     onChange={handleSpeedChange}
                                     disabled={isrunning}
                                 />
@@ -279,10 +261,14 @@ const Panel = () => {
                         </Paper>
                         <div className={classes.margin} />
                         <Paper className={classes.paper} elevation={2}>
-                            <Button variant="outlined" color="primary" className={classes.sortbutton}>
+                            <Button variant="outlined" color="primary"
+                                disabled={true}
+                                className={classes.sortbutton}>
                                 Radix Sort (MSD)
                             </Button>
-                            <Button variant="outlined" color="primary" className={classes.sortbutton}>
+                            <Button variant="outlined" color="primary"
+                                disabled={true}
+                                className={classes.sortbutton}>
                                 Radix Sort (LSD)
                             </Button>
                             <Button variant="outlined" color="primary" className={classes.sortbutton}
@@ -291,7 +277,7 @@ const Panel = () => {
                                 Insertion Sort
                             </Button>
                             <Button variant="outlined" color="primary" className={classes.sortbutton}
-
+                                disabled={true}
                             >
                                 Bucket Sort
                             </Button>
@@ -302,7 +288,7 @@ const Panel = () => {
                             <div
                                 className="single-bar"
                                 style={{
-                                    height: `${maxElement+20}px`,
+                                    height: `${maxElement + 20}px`,
                                     width: `${0}px`
                                 }}
                             ></div>

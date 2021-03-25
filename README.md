@@ -3,4 +3,4 @@
 ### Introduction
 
 Sorting methods visualizer.
-Click here to see: https://willproj.github.io/covid19-react-app/
+Click here to see: https://willproj.github.io/sorting-visualization-web/

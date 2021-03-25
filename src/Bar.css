@@ -4,6 +4,11 @@
     margin: 0 1px;
 }
 
+.array-num-bar{
+    display: inline-block;
+    width: 4px;
+}
+
 .single-bar {
     width: 4px;
     display: inline-block;

@@ -12,6 +12,7 @@ import getInsertionSortAnimations from './algComponent/InsertionSort'
 import getMergeSortAnimations from './algComponent/MergeSort'
 import getQuickSortFirstAnimations from './algComponent/QuickSort'
 import getSelectionSortAnimations from './algComponent/SelectionSort'
+import getRadixSortLSDAnimations from './algComponent/RadixSortLSD'
 
 import randomGenerator, {
     initArraySize, minElement, maxElement,
@@ -207,6 +208,38 @@ const Panel = () => {
         }
     }
 
+    const radixSortLSD = () => {
+        const animationArray = getRadixSortLSDAnimations(array);
+        const arrayBars = document.getElementsByClassName('array-bar');
+        let index = 0;
+        for (let i = 0; i < animationArray.length; i++) {
+
+            if (i % 2 == 0) {
+                for (let j = 0; j < animationArray[i].length; j++) {
+                    const barIndex = animationArray[i][j];
+                    const barStyle = arrayBars[barIndex].style;
+                    const color = changeColor;
+                    setTimeout(() => {
+                        barStyle.backgroundColor = color;
+                    }, index * speed);
+                    index++;
+                }
+            } else {
+
+                for (let j = 0; j < animationArray[i].length; j++) {
+                    const [bar, newHeight] = animationArray[i][j];
+                    const barStyle = arrayBars[bar].style;
+                    const color = initColor;
+                    setTimeout(() => {
+                        barStyle.backgroundColor = color;
+                        barStyle.height = `${newHeight}px`;
+                    }, index * speed);
+                    index++;
+                }
+            }
+        }
+    };
+
 
 
     return (
@@ -262,15 +295,15 @@ const Panel = () => {
                         <div className={classes.margin} />
                         <Paper className={classes.paper} elevation={2}>
                             <Button variant="outlined" color="primary"
-                                disabled={true}
                                 className={classes.sortbutton}>
                                 Radix Sort (MSD)
                             </Button>
-                            <Button variant="outlined" color="primary"
-                                disabled={true}
-                                className={classes.sortbutton}>
+                            <Button variant="outlined" color="primary" className={classes.sortbutton}
+                                onClick={(e) => radixSortLSD()}
+                            >
                                 Radix Sort (LSD)
                             </Button>
+
                             <Button variant="outlined" color="primary" className={classes.sortbutton}
                                 onClick={(e) => insertionSort()}
                             >
@@ -293,18 +326,25 @@ const Panel = () => {
                                 }}
                             ></div>
                             {array.map((value, idx) => {
-                                return <div
-                                    className="array-bar"
-                                    key={idx}
-                                    style={{
-                                        backgroundColor: initColor,
-                                        height: `${value}px`,
-                                        width: `${maxArraySize * 10 / array.length}px`
-                                    }}></div>
+                                return
+                                <div>
+                                    <div
+                                        className="array-bar"
+                                        key={idx}
+                                        style={{
+                                            backgroundColor: initColor,
+                                            height: `${value}px`,
+                                            width: `${maxArraySize * 10 / array.length}px`
+                                        }}></div>
+                                </div>
+
                             })}
+
                         </Paper>
 
+
                     </Grid>
+
 
                 </Grid>
             </div>
